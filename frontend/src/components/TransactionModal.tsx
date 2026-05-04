@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { CircleArrowDown, CircleArrowUp } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -143,34 +144,36 @@ export function TransactionModal({ open, onClose, transaction }: Props) {
           </DialogTitle>
           {!isEdit && (
             <p className="text-sm text-muted-foreground">
-              Registre sua despesa ou Receita
+              Registre sua despesa ou receita
             </p>
           )}
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2">
           {/* Type toggle */}
-          <div className="flex rounded-lg border overflow-hidden">
+          <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
               onClick={() => setValue("type", "EXPENSE")}
-              className={`flex-1 py-2 text-sm font-medium transition-colors ${
+              className={`flex items-center justify-center gap-2 py-2.5 rounded-lg border text-sm font-medium transition-colors ${
                 typeValue === "EXPENSE"
-                  ? "bg-red-500 text-white"
-                  : "bg-white text-muted-foreground hover:bg-gray-50"
+                  ? "border-[#DC2626] text-[#DC2626] bg-[#FEE2E2]"
+                  : "border-border text-muted-foreground bg-card hover:bg-gray-50"
               }`}
             >
+              <CircleArrowDown className="w-4 h-4" />
               Despesa
             </button>
             <button
               type="button"
               onClick={() => setValue("type", "INCOME")}
-              className={`flex-1 py-2 text-sm font-medium transition-colors ${
+              className={`flex items-center justify-center gap-2 py-2.5 rounded-lg border text-sm font-medium transition-colors ${
                 typeValue === "INCOME"
-                  ? "bg-primary text-white"
-                  : "bg-white text-muted-foreground hover:bg-gray-50"
+                  ? "border-[#16A34A] text-[#16A34A] bg-[#E0FAE9]"
+                  : "border-border text-muted-foreground bg-card hover:bg-gray-50"
               }`}
             >
+              <CircleArrowUp className="w-4 h-4" />
               Receita
             </button>
           </div>

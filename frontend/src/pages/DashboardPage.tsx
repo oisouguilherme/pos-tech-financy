@@ -49,7 +49,7 @@ export function DashboardPage() {
       <div className="grid grid-cols-3 gap-6">
         {/* ── Stat Cards ── */}
         {/* Saldo Total */}
-        <div className="bg-card border border-border rounded-xl p-[25px] flex flex-col gap-4">
+        <div className="bg-card border border-border rounded-xl p-6.25 flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <Wallet className="w-5 h-5 text-purple-600 shrink-0" />
             <span className="text-[11px] font-medium tracking-[0.6px] uppercase text-muted-foreground">
@@ -66,7 +66,7 @@ export function DashboardPage() {
         </div>
 
         {/* Receitas */}
-        <div className="bg-card border border-border rounded-xl p-[25px] flex flex-col gap-4">
+        <div className="bg-card border border-border rounded-xl p-6.25 flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <CircleArrowUp className="w-5 h-5 text-[#16A34A] shrink-0" />
             <span className="text-[11px] font-medium tracking-[0.6px] uppercase text-muted-foreground">
@@ -83,7 +83,7 @@ export function DashboardPage() {
         </div>
 
         {/* Despesas */}
-        <div className="bg-card border border-border rounded-xl p-[25px] flex flex-col gap-4">
+        <div className="bg-card border border-border rounded-xl p-6.25 flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <CircleArrowDown className="w-5 h-5 text-[#DC2626] shrink-0" />
             <span className="text-[11px] font-medium tracking-[0.6px] uppercase text-muted-foreground">
@@ -250,10 +250,7 @@ export function DashboardPage() {
               dash?.categorySummary.map((cs) => {
                 const style = catStyle(cs.category.color);
                 return (
-                  <div
-                    key={cs.category.id}
-                    className="flex items-center gap-1"
-                  >
+                  <div key={cs.category.id} className="flex items-center gap-1">
                     {/* Category pill */}
                     <span
                       className="text-sm font-medium px-3 py-1 rounded-full whitespace-nowrap shrink-0"
@@ -289,5 +286,3 @@ export function DashboardPage() {
     </>
   );
 }
-
-
