@@ -1,11 +1,9 @@
 import { useQuery, useMutation } from "@apollo/client/react";
-import { Plus, Pencil, Trash2, Tag, List } from "lucide-react";
+import { Plus, Pencil, Trash2, Tag, ArrowUpDown } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { CATEGORIES_QUERY, DELETE_CATEGORY_MUTATION } from "@/graphql/queries";
+import { catStyle } from "@/lib/format";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { CategoryModal } from "@/components/CategoryModal";
 import type { Category } from "@/types";
@@ -59,92 +57,107 @@ export function CategoriesPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      {/* Header */}
       <div className="flex items-start justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Categorias</h1>
-          <p className="text-sm text-muted-foreground">
+        <div className="flex flex-col gap-0.5">
+          <h1 className="text-[24px] font-bold text-[#111827] leading-8">
+            Categorias
+          </h1>
+          <p className="text-base text-[#4B5563]">
             Organize suas transações por categorias
           </p>
         </div>
-        <Button
-          className="bg-primary hover:bg-primary/90"
+        <button
           onClick={() => {
             setEditCategory(null);
             setOpenModal(true);
           }}
+          className="flex items-center gap-2 bg-primary text-white text-sm font-medium px-3 py-2 rounded-lg hover:bg-primary/90 transition-colors"
         >
-          <Plus className="w-4 h-4 mr-2" />
+          <Plus className="w-4 h-4" />
           Nova categoria
-        </Button>
+        </button>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardContent className="pt-6 flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <Tag className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <p className="text-2xl font-bold">{categories.length}</p>
-              <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                Total de categorias
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6 flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-              <List className="w-5 h-5 text-blue-500" />
-            </div>
-            <div>
-              <p className="text-2xl font-bold">{totalTransactions}</p>
-              <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                Total de transações
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6 flex items-center gap-4">
-            {mostUsed ? (
-              <>
-                <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: `${mostUsed.color}20` }}
-                >
-                  <CategoryIcon
-                    icon={mostUsed.icon}
-                    className="w-5 h-5"
-                    style={{ color: mostUsed.color }}
-                  />
-                </div>
-                <div>
-                  <p className="text-xl font-bold">{mostUsed.title}</p>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                    Categoria mais utilizada
-                  </p>
-                </div>
-              </>
-            ) : (
-              <p className="text-sm text-muted-foreground">
-                Nenhuma categoria ainda
-              </p>
-            )}
-          </CardContent>
-        </Card>
+      {/* Stat cards */}
+      <div className="grid grid-cols-3 gap-6">
+        {/* Total categorias */}
+        <div className="bg-card border border-border rounded-xl p-[25px] flex items-center gap-6">
+          <div className="w-10 h-10 rounded-lg bg-[#E0FAE9] flex items-center justify-center shrink-0">
+            <Tag className="w-5 h-5 text-[#15803D]" />
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[28px] font-bold text-[#111827] leading-8">
+              {loading ? (
+                <span className="inline-block h-8 w-12 bg-gray-100 rounded animate-pulse" />
+              ) : (
+                categories.length
+              )}
+            </span>
+            <span className="text-[11px] font-medium tracking-[0.6px] uppercase text-[#6B7280]">
+              Total de categorias
+            </span>
+          </div>
+        </div>
+
+        {/* Total transações */}
+        <div className="bg-card border border-border rounded-xl p-[25px] flex items-center gap-6">
+          <div className="w-10 h-10 rounded-lg bg-[#DBEAFE] flex items-center justify-center shrink-0">
+            <ArrowUpDown className="w-5 h-5 text-[#1D4ED8]" />
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[28px] font-bold text-[#111827] leading-8">
+              {loading ? (
+                <span className="inline-block h-8 w-12 bg-gray-100 rounded animate-pulse" />
+              ) : (
+                totalTransactions
+              )}
+            </span>
+            <span className="text-[11px] font-medium tracking-[0.6px] uppercase text-[#6B7280]">
+              Total de transações
+            </span>
+          </div>
+        </div>
+
+        {/* Categoria mais utilizada */}
+        <div className="bg-card border border-border rounded-xl p-[25px] flex items-center gap-6">
+          {loading ? (
+            <div className="h-8 w-40 bg-gray-100 rounded animate-pulse" />
+          ) : mostUsed ? (
+            <>
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                style={{ backgroundColor: catStyle(mostUsed.color).bg }}
+              >
+                <CategoryIcon
+                  icon={mostUsed.icon}
+                  className="w-5 h-5"
+                  style={{ color: catStyle(mostUsed.color).text }}
+                />
+              </div>
+              <div className="flex flex-col gap-0.5 min-w-0">
+                <span className="text-[28px] font-bold text-[#111827] leading-8 truncate">
+                  {mostUsed.title}
+                </span>
+                <span className="text-[11px] font-medium tracking-[0.6px] uppercase text-[#6B7280]">
+                  Categoria mais utilizada
+                </span>
+              </div>
+            </>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              Nenhuma categoria ainda
+            </p>
+          )}
+        </div>
       </div>
 
-      {/* Grid */}
+      {/* Category cards grid */}
       {loading && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-36 bg-gray-100 rounded-xl animate-pulse"
-            />
+            <div key={i} className="h-40 bg-gray-100 rounded-xl animate-pulse" />
           ))}
         </div>
       )}
@@ -152,68 +165,77 @@ export function CategoriesPage() {
       {!loading && !categories.length && (
         <div className="text-center py-16 text-muted-foreground">
           <Tag className="w-12 h-12 mx-auto mb-3 opacity-30" />
-          <p>Nenhuma categoria criada ainda</p>
+          <p className="text-sm">Nenhuma categoria criada ainda</p>
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {categories.map((cat) => (
-          <Card key={cat.id} className="hover:shadow-md transition-shadow">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-start justify-between mb-3">
-                <div
-                  className="w-9 h-9 rounded-lg flex items-center justify-center"
-                  style={{ backgroundColor: `${cat.color}20` }}
-                >
-                  <CategoryIcon
-                    icon={cat.icon}
-                    className="w-5 h-5"
-                    style={{ color: cat.color }}
-                  />
+      {!loading && categories.length > 0 && (
+        <div className="grid grid-cols-4 gap-4">
+          {categories.map((cat) => {
+            const cs = catStyle(cat.color);
+            return (
+              <div
+                key={cat.id}
+                className="bg-card border border-border rounded-xl p-6 flex flex-col gap-3"
+              >
+                {/* Top row: icon + actions */}
+                <div className="flex items-start justify-between">
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: cs.bg }}
+                  >
+                    <CategoryIcon
+                      icon={cat.icon}
+                      className="w-5 h-5"
+                      style={{ color: cs.text }}
+                    />
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => handleDelete(cat.id)}
+                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#D1D5DB] bg-white hover:bg-red-50 hover:border-red-200 transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4 text-[#6B7280]" />
+                    </button>
+                    <button
+                      onClick={() => handleEdit(cat)}
+                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#D1D5DB] bg-white hover:bg-gray-50 transition-colors"
+                    >
+                      <Pencil className="w-4 h-4 text-[#6B7280]" />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => handleEdit(cat)}
-                    className="p-1.5 rounded hover:bg-gray-100 text-muted-foreground hover:text-foreground transition-colors"
+
+                {/* Title + description */}
+                <div className="flex flex-col gap-1 flex-1">
+                  <h3 className="text-base font-semibold text-[#111827]">
+                    {cat.title}
+                  </h3>
+                  {cat.description && (
+                    <p className="text-sm text-[#4B5563] line-clamp-2">
+                      {cat.description}
+                    </p>
+                  )}
+                </div>
+
+                {/* Bottom: pill + count */}
+                <div className="flex items-center justify-between gap-2">
+                  <span
+                    className="text-sm font-medium px-3 py-1 rounded-full whitespace-nowrap"
+                    style={{ backgroundColor: cs.bg, color: cs.text }}
                   >
-                    <Pencil className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(cat.id)}
-                    className="p-1.5 rounded hover:bg-red-50 text-muted-foreground hover:text-red-500 transition-colors"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
+                    {cat.title}
+                  </span>
+                  <span className="text-sm text-[#4B5563] whitespace-nowrap shrink-0">
+                    {cat.transactionCount}{" "}
+                    {cat.transactionCount === 1 ? "item" : "itens"}
+                  </span>
                 </div>
               </div>
-
-              <h3 className="font-semibold text-sm mb-0.5">{cat.title}</h3>
-              {cat.description && (
-                <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
-                  {cat.description}
-                </p>
-              )}
-
-              <div className="flex items-center justify-between mt-2">
-                <Badge
-                  variant="secondary"
-                  className="text-xs"
-                  style={{
-                    backgroundColor: `${cat.color}20`,
-                    color: cat.color,
-                  }}
-                >
-                  {cat.title}
-                </Badge>
-                <span className="text-xs text-muted-foreground">
-                  {cat.transactionCount}{" "}
-                  {cat.transactionCount === 1 ? "item" : "itens"}
-                </span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       <CategoryModal
         open={openModal}
@@ -223,3 +245,4 @@ export function CategoriesPage() {
     </div>
   );
 }
+
