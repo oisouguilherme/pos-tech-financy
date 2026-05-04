@@ -18,21 +18,18 @@ import {
   UPDATE_CATEGORY_MUTATION,
   CATEGORIES_QUERY,
 } from "@/graphql/queries";
-import { CategoryIcon, AVAILABLE_ICONS } from "@/components/CategoryIcon";
+import { CategoryIcon, PICKER_ICONS } from "@/components/CategoryIcon";
 import type { Category } from "@/types";
 
-// Paleta oficial do Figma — Style Guide: Financy Community
+// Paleta oficial do Figma — 7 cores do picker (node 3107-4607)
 const PRESET_COLORS = [
-  "#1F6F43", // brand-base (verde primário)
+  "#16A34A", // green-base
   "#2563EB", // blue-base
   "#9333EA", // purple-base
   "#DB2777", // pink-base
   "#DC2626", // red-base
   "#EA580C", // orange-base
   "#CA8A04", // yellow-base
-  "#16A34A", // green-base
-  "#6B7280", // gray-500
-  "#111827", // gray-800 (dark)
 ];
 
 const schema = z.object({
@@ -63,10 +60,9 @@ export function CategoryModal({ open, onClose, category }: Props) {
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { icon: "dollar", color: PRESET_COLORS[0] },
+    defaultValues: { icon: "briefcase_business", color: PRESET_COLORS[0] },
   });
 
-  const selectedIcon = watch("icon");
   const selectedColor = watch("color");
 
   const [createCategory] = useMutation(CREATE_CATEGORY_MUTATION, {
@@ -91,7 +87,7 @@ export function CategoryModal({ open, onClose, category }: Props) {
         reset({
           title: "",
           description: "",
-          icon: "dollar",
+          icon: "briefcase_business",
           color: PRESET_COLORS[0],
         });
       }
@@ -128,10 +124,14 @@ export function CategoryModal({ open, onClose, category }: Props) {
           <DialogTitle>
             {isEdit ? "Editar categoria" : "Nova categoria"}
           </DialogTitle>
+          <p className="text-sm text-muted-foreground">
+            Organize suas transações com categorias
+          </p>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-2">
-          <div className="space-y-1.5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2">
+          {/* Título */}
+          <div className="space-y-2">
             <Label htmlFor="title">Título</Label>
             <Input
               id="title"
@@ -143,96 +143,83 @@ export function CategoryModal({ open, onClose, category }: Props) {
             )}
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="description">Descrição (opcional)</Label>
+          {/* Descrição */}
+          <div className="space-y-2">
+            <Label htmlFor="description">Descrição</Label>
             <Input
               id="description"
-              placeholder="Ex. Gastos com comida e bebida"
+              placeholder="Descrição da categoria"
               {...register("description")}
             />
+            <p className="text-xs text-muted-foreground">Opcional</p>
           </div>
 
-          {/* Color picker */}
-          <div className="space-y-2">
-            <Label>Cor</Label>
-            <Controller
-              name="color"
-              control={control}
-              render={({ field }) => (
-                <div className="flex flex-wrap gap-2">
-                  {PRESET_COLORS.map((c) => (
-                    <button
-                      key={c}
-                      type="button"
-                      onClick={() => field.onChange(c)}
-                      className={`w-7 h-7 rounded-full transition-transform ${
-                        field.value === c
-                          ? "scale-125 ring-2 ring-offset-2 ring-gray-400"
-                          : "hover:scale-110"
-                      }`}
-                      style={{ backgroundColor: c }}
-                    />
-                  ))}
-                </div>
-              )}
-            />
-          </div>
-
-          {/* Icon picker */}
+          {/* Ícone */}
           <div className="space-y-2">
             <Label>Ícone</Label>
             <Controller
               name="icon"
               control={control}
               render={({ field }) => (
-                <div className="grid grid-cols-8 gap-1 max-h-32 overflow-y-auto p-1">
-                  {AVAILABLE_ICONS.map((icon) => (
-                    <button
-                      key={icon}
-                      type="button"
-                      onClick={() => field.onChange(icon)}
-                      className={`p-2 rounded-lg flex items-center justify-center transition-colors ${
-                        field.value === icon
-                          ? "ring-2 ring-primary"
-                          : "hover:bg-gray-100"
-                      }`}
-                      style={{
-                        backgroundColor:
-                          field.value === icon
-                            ? `${selectedColor}20`
-                            : undefined,
-                      }}
-                    >
-                      <CategoryIcon
-                        icon={icon}
-                        className="w-4 h-4"
-                        style={{
-                          color:
-                            field.value === icon ? selectedColor : "#6b7280",
-                        }}
-                      />
-                    </button>
-                  ))}
+                <div className="flex flex-wrap gap-2">
+                  {PICKER_ICONS.map((icon) => {
+                    const active = field.value === icon;
+                    return (
+                      <button
+                        key={icon}
+                        type="button"
+                        onClick={() => field.onChange(icon)}
+                        className={`w-10.5 h-10.5 flex items-center justify-center rounded-lg border transition-colors ${
+                          active
+                            ? "bg-[#f8f9fa] border-[#1f6f43]"
+                            : "border-[#d1d5db] hover:bg-gray-50"
+                        }`}
+                      >
+                        <CategoryIcon
+                          icon={icon}
+                          className="w-5 h-5"
+                          style={{ color: active ? selectedColor : "#6b7280" }}
+                        />
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             />
           </div>
 
-          {/* Preview */}
-          <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-            <div
-              className="w-9 h-9 rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: `${selectedColor}20` }}
-            >
-              <CategoryIcon
-                icon={selectedIcon}
-                className="w-5 h-5"
-                style={{ color: selectedColor }}
-              />
-            </div>
-            <span className="text-sm font-medium text-muted-foreground">
-              {watch("title") || "Preview da categoria"}
-            </span>
+          {/* Cor */}
+          <div className="space-y-2">
+            <Label>Cor</Label>
+            <Controller
+              name="color"
+              control={control}
+              render={({ field }) => (
+                <div className="flex gap-2">
+                  {PRESET_COLORS.map((c) => {
+                    const active =
+                      field.value.toLowerCase() === c.toLowerCase();
+                    return (
+                      <button
+                        key={c}
+                        type="button"
+                        onClick={() => field.onChange(c)}
+                        className={`flex flex-1 items-center justify-center p-1.25 rounded-lg border transition-colors ${
+                          active
+                            ? "bg-[#f8f9fa] border-[#1f6f43]"
+                            : "border-[#d1d5db] hover:bg-gray-50"
+                        }`}
+                      >
+                        <div
+                          className="h-5 w-full rounded"
+                          style={{ backgroundColor: c }}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            />
           </div>
 
           <Button

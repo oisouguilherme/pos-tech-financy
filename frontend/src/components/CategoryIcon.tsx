@@ -23,10 +23,21 @@ import {
   PawPrint,
   GraduationCap,
   Building2,
+  // Figma picker icons
+  BriefcaseBusiness,
+  CarFront,
+  HeartPulse,
+  PiggyBank,
+  Ticket,
+  Dumbbell,
+  BaggageClaim,
+  Mailbox,
+  ReceiptText,
   type LucideProps,
 } from "lucide-react";
 
 const ICON_MAP: Record<string, React.ComponentType<LucideProps>> = {
+  // legacy keys (backward compat)
   shopping_cart: ShoppingCart,
   utensils: UtensilsCrossed,
   car: Car,
@@ -51,9 +62,39 @@ const ICON_MAP: Record<string, React.ComponentType<LucideProps>> = {
   paw: PawPrint,
   graduation: GraduationCap,
   building: Building2,
+  // Figma picker icons
+  briefcase_business: BriefcaseBusiness,
+  car_front: CarFront,
+  heart_pulse: HeartPulse,
+  piggy_bank: PiggyBank,
+  ticket: Ticket,
+  dumbbell: Dumbbell,
+  baggage_claim: BaggageClaim,
+  mailbox: Mailbox,
+  receipt_text: ReceiptText,
 };
 
 export const AVAILABLE_ICONS = Object.keys(ICON_MAP);
+
+// Ordered list matching Figma design (node 3107-4607)
+export const PICKER_ICONS = [
+  "briefcase_business",
+  "car_front",
+  "heart_pulse",
+  "piggy_bank",
+  "shopping_cart",
+  "ticket",
+  "wrench",
+  "utensils",
+  "paw",
+  "home",
+  "gift",
+  "dumbbell",
+  "book",
+  "baggage_claim",
+  "mailbox",
+  "receipt_text",
+] as const;
 
 export function CategoryIcon({
   icon,
