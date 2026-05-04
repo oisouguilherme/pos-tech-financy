@@ -83,7 +83,7 @@ export function CategoriesPage() {
       {/* Stat cards */}
       <div className="grid grid-cols-3 gap-6">
         {/* Total categorias */}
-        <div className="bg-card border border-border rounded-xl p-[25px] flex items-center gap-6">
+        <div className="bg-card border border-border rounded-xl p-6.25 flex items-center gap-6">
           <div className="w-10 h-10 rounded-lg bg-[#E0FAE9] flex items-center justify-center shrink-0">
             <Tag className="w-5 h-5 text-[#15803D]" />
           </div>
@@ -102,7 +102,7 @@ export function CategoriesPage() {
         </div>
 
         {/* Total transações */}
-        <div className="bg-card border border-border rounded-xl p-[25px] flex items-center gap-6">
+        <div className="bg-card border border-border rounded-xl p-6.25 flex items-center gap-6">
           <div className="w-10 h-10 rounded-lg bg-[#DBEAFE] flex items-center justify-center shrink-0">
             <ArrowUpDown className="w-5 h-5 text-[#1D4ED8]" />
           </div>
@@ -121,7 +121,7 @@ export function CategoriesPage() {
         </div>
 
         {/* Categoria mais utilizada */}
-        <div className="bg-card border border-border rounded-xl p-[25px] flex items-center gap-6">
+        <div className="bg-card border border-border rounded-xl p-6.25 flex items-center gap-6">
           {loading ? (
             <div className="h-8 w-40 bg-gray-100 rounded animate-pulse" />
           ) : mostUsed ? (
@@ -157,7 +157,10 @@ export function CategoriesPage() {
       {loading && (
         <div className="grid grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-40 bg-gray-100 rounded-xl animate-pulse" />
+            <div
+              key={i}
+              className="h-40 bg-gray-100 rounded-xl animate-pulse"
+            />
           ))}
         </div>
       )}
@@ -245,4 +248,3 @@ export function CategoriesPage() {
     </div>
   );
 }
-

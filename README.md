@@ -22,31 +22,31 @@
 
 ### Backend
 
-| Tecnologia | Versão | Papel |
-|---|---|---|
-| Node.js | 20+ | Runtime |
-| Apollo Server | 4 | Servidor GraphQL |
-| Prisma ORM | 5 | Acesso ao banco de dados |
-| SQLite | — | Banco de dados |
-| JSON Web Token | 9 | Autenticação |
-| bcryptjs | 2 | Hash de senhas |
-| TypeScript | 5 | Tipagem estática |
+| Tecnologia     | Versão | Papel                    |
+| -------------- | ------ | ------------------------ |
+| Node.js        | 20+    | Runtime                  |
+| Apollo Server  | 4      | Servidor GraphQL         |
+| Prisma ORM     | 5      | Acesso ao banco de dados |
+| SQLite         | —      | Banco de dados           |
+| JSON Web Token | 9      | Autenticação             |
+| bcryptjs       | 2      | Hash de senhas           |
+| TypeScript     | 5      | Tipagem estática         |
 
 ### Frontend
 
-| Tecnologia | Versão | Papel |
-|---|---|---|
-| React | 19 | UI |
-| Vite | 8 | Bundler |
-| TypeScript | 6 | Tipagem estática |
-| Apollo Client | 4 | Comunicação GraphQL |
-| Tailwind CSS | 4 | Estilização |
-| Shadcn/ui + Radix UI | — | Componentes acessíveis |
-| React Router | 7 | Roteamento SPA |
-| React Hook Form + Zod | — | Formulários e validação |
-| date-fns | 4 | Manipulação de datas |
-| Lucide React | — | Ícones |
-| Sonner | — | Notificações toast |
+| Tecnologia            | Versão | Papel                   |
+| --------------------- | ------ | ----------------------- |
+| React                 | 19     | UI                      |
+| Vite                  | 8      | Bundler                 |
+| TypeScript            | 6      | Tipagem estática        |
+| Apollo Client         | 4      | Comunicação GraphQL     |
+| Tailwind CSS          | 4      | Estilização             |
+| Shadcn/ui + Radix UI  | —      | Componentes acessíveis  |
+| React Router          | 7      | Roteamento SPA          |
+| React Hook Form + Zod | —      | Formulários e validação |
+| date-fns              | 4      | Manipulação de datas    |
+| Lucide React          | —      | Ícones                  |
+| Sonner                | —      | Notificações toast      |
 
 ---
 
@@ -115,28 +115,28 @@ Transaction
 
 ### Queries
 
-| Query | Descrição |
-|---|---|
-| `me` | Retorna o usuário autenticado |
-| `transactions(type?, categoryId?, startDate?, endDate?)` | Lista transações com filtros opcionais |
-| `transaction(id)` | Retorna uma transação pelo ID |
-| `categories` | Lista as categorias do usuário |
-| `category(id)` | Retorna uma categoria pelo ID |
-| `dashboard` | Retorna saldo, receitas/despesas do mês, últimas transações e resumo por categoria |
+| Query                                                    | Descrição                                                                          |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `me`                                                     | Retorna o usuário autenticado                                                      |
+| `transactions(type?, categoryId?, startDate?, endDate?)` | Lista transações com filtros opcionais                                             |
+| `transaction(id)`                                        | Retorna uma transação pelo ID                                                      |
+| `categories`                                             | Lista as categorias do usuário                                                     |
+| `category(id)`                                           | Retorna uma categoria pelo ID                                                      |
+| `dashboard`                                              | Retorna saldo, receitas/despesas do mês, últimas transações e resumo por categoria |
 
 ### Mutations
 
-| Mutation | Descrição |
-|---|---|
-| `register(input)` | Cria novo usuário |
-| `login(input)` | Autentica e retorna token JWT |
-| `updateProfile(input)` | Atualiza nome/email/senha do usuário |
-| `createTransaction(input)` | Cria uma transação |
-| `updateTransaction(id, input)` | Atualiza uma transação |
-| `deleteTransaction(id)` | Remove uma transação |
-| `createCategory(input)` | Cria uma categoria |
-| `updateCategory(id, input)` | Atualiza uma categoria |
-| `deleteCategory(id)` | Remove uma categoria |
+| Mutation                       | Descrição                            |
+| ------------------------------ | ------------------------------------ |
+| `register(input)`              | Cria novo usuário                    |
+| `login(input)`                 | Autentica e retorna token JWT        |
+| `updateProfile(input)`         | Atualiza nome/email/senha do usuário |
+| `createTransaction(input)`     | Cria uma transação                   |
+| `updateTransaction(id, input)` | Atualiza uma transação               |
+| `deleteTransaction(id)`        | Remove uma transação                 |
+| `createCategory(input)`        | Cria uma categoria                   |
+| `updateCategory(id, input)`    | Atualiza uma categoria               |
+| `deleteCategory(id)`           | Remove uma categoria                 |
 
 > Todas as operações (exceto `register` e `login`) exigem o header `Authorization: Bearer <token>`.
 
@@ -220,54 +220,59 @@ A aplicação estará disponível em `http://localhost:5173`.
 
 ### Backend
 
-| Comando | Descrição |
-|---|---|
-| `npm run dev` | Inicia em modo desenvolvimento com hot-reload |
-| `npm run build` | Compila TypeScript para `dist/` |
-| `npm start` | Inicia a versão compilada |
-| `npm run prisma:migrate` | Executa as migrações do banco |
-| `npm run prisma:studio` | Abre o Prisma Studio (GUI do banco) |
+| Comando                  | Descrição                                     |
+| ------------------------ | --------------------------------------------- |
+| `npm run dev`            | Inicia em modo desenvolvimento com hot-reload |
+| `npm run build`          | Compila TypeScript para `dist/`               |
+| `npm start`              | Inicia a versão compilada                     |
+| `npm run prisma:migrate` | Executa as migrações do banco                 |
+| `npm run prisma:studio`  | Abre o Prisma Studio (GUI do banco)           |
 
 ### Frontend
 
-| Comando | Descrição |
-|---|---|
-| `npm run dev` | Inicia o Vite em modo desenvolvimento |
-| `npm run build` | Gera o build de produção em `dist/` |
+| Comando           | Descrição                                |
+| ----------------- | ---------------------------------------- |
+| `npm run dev`     | Inicia o Vite em modo desenvolvimento    |
+| `npm run build`   | Gera o build de produção em `dist/`      |
 | `npm run preview` | Visualiza o build de produção localmente |
-| `npm run lint` | Executa o ESLint |
+| `npm run lint`    | Executa o ESLint                         |
 
 ---
 
 ## Decisões Técnicas
 
 ### GraphQL com Apollo Server v4
+
 A escolha por GraphQL permite que o frontend requisite exatamente os campos necessários, evitando over-fetching e under-fetching. O Apollo Server v4 traz melhorias significativas de performance e API mais simples em relação à v3.
 
 ### Prisma ORM + SQLite
+
 O Prisma oferece type-safety end-to-end com as models geradas automaticamente. O SQLite elimina a necessidade de infraestrutura externa de banco de dados, facilitando a execução local do projeto.
 
 ### Autenticação com JWT
+
 Tokens JWT são armazenados no `localStorage` e enviados como `Bearer token` no header `Authorization`. O middleware valida e injeta o `userId` no contexto do Apollo Server.
 
 ### Tailwind CSS v4 com Design Tokens
+
 As variáveis do Figma foram mapeadas no bloco `@theme inline` do CSS, criando utilities customizadas (`bg-primary`, `bg-card`, `text-foreground`) alinhadas ao design system do projeto.
 
 ### React Hook Form + Zod
+
 A validação dos formulários é feita em camadas: Zod define o schema e o React Hook Form gerencia o estado do form, garantindo UX com feedback de erro em tempo real sem re-renders desnecessários.
 
 ---
 
 ## Estrutura das Páginas
 
-| Rota | Página | Acesso |
-|---|---|---|
-| `/login` | LoginPage | Público |
-| `/register` | RegisterPage | Público |
-| `/` | DashboardPage | Autenticado |
+| Rota            | Página           | Acesso      |
+| --------------- | ---------------- | ----------- |
+| `/login`        | LoginPage        | Público     |
+| `/register`     | RegisterPage     | Público     |
+| `/`             | DashboardPage    | Autenticado |
 | `/transactions` | TransactionsPage | Autenticado |
-| `/categories` | CategoriesPage | Autenticado |
-| `/profile` | ProfilePage | Autenticado |
+| `/categories`   | CategoriesPage   | Autenticado |
+| `/profile`      | ProfilePage      | Autenticado |
 
 Rotas protegidas redirecionam para `/login` se não houver token válido.
 
@@ -277,16 +282,16 @@ Rotas protegidas redirecionam para `/login` se não houver token válido.
 
 ### Backend (`backend/.env`)
 
-| Variável | Descrição | Exemplo |
-|---|---|---|
-| `DATABASE_URL` | Caminho do banco SQLite | `file:./dev.db` |
-| `JWT_SECRET` | Chave secreta para assinar tokens | `minha_chave_secreta` |
-| `PORT` | Porta do servidor | `4000` |
+| Variável       | Descrição                         | Exemplo               |
+| -------------- | --------------------------------- | --------------------- |
+| `DATABASE_URL` | Caminho do banco SQLite           | `file:./dev.db`       |
+| `JWT_SECRET`   | Chave secreta para assinar tokens | `minha_chave_secreta` |
+| `PORT`         | Porta do servidor                 | `4000`                |
 
 ### Frontend (`frontend/.env`)
 
-| Variável | Descrição | Exemplo |
-|---|---|---|
+| Variável           | Descrição               | Exemplo                  |
+| ------------------ | ----------------------- | ------------------------ |
 | `VITE_BACKEND_URL` | URL base da API GraphQL | `http://localhost:4000/` |
 
 ---
